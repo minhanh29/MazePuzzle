@@ -1,0 +1,32 @@
+import java.util.*;
+
+public class MazeTest {
+	public static void main(String[] args)
+	{
+		@SuppressWarnings("resource")
+		Scanner scan = new Scanner(System.in);
+		System.out.print("Enter the maze size: ");
+		int size = scan.nextInt();
+		
+		MazeGenerator generator = new MazeGenerator(size);
+		int[][] maze = new int[size][size];
+		maze = generator.generate();
+		
+		print(maze);
+		System.out.println();
+		
+		MazeSolution solution = new MazeSolution(maze);
+		solution.solve();
+		print(solution.getSolution());
+	}
+	
+	public static void print(int[][] data)
+	{
+		for (int row = 0; row < data.length; row++)
+		{
+			for (int col = 0; col < data[row].length; col++)
+				System.out.print(data[row][col] + "   ");
+			System.out.println("\n");
+		}
+	}
+}
