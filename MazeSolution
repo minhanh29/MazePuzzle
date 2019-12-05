@@ -1,0 +1,100 @@
+public class MazeSolution {
+	private int[][] maze;
+	private int N;
+	private boolean[][] visit;
+	
+	public MazeSolution(int[][] data)
+	{
+		maze = new int[data.length][data[0].length];
+		
+		for (int row = 0; row < data.length; row++)
+			for (int col = 0; col < data[row].length; col++)
+				maze[row][col] = data[row][col];
+		N = maze.length;
+		
+		visit = new boolean[N][N];
+		for (int row = 0; row < visit.length; row++)
+			for (int col = 0; col < visit[row].length; col++)
+				visit[row][col] = false;
+	}
+	
+	private boolean isGoal(int x, int y)
+	{
+		if (x == N - 1 && y == N - 1)
+			return true;
+		return false;
+	}
+	
+	private boolean isValid(int x, int y)
+	{
+		if (x < N && y < N && x >= 0 && y>= 0)
+			if (maze[x][y] == 1)
+				return true;
+		return false;
+	}
+	
+	//recursions
+	private boolean backTrack(int row, int col)
+	{
+		if (isGoal(row, col))
+		{
+			maze[row][col] = 2;
+			return true;
+		}
+		
+		if (!isValid(row, col) || isVisited(row,col))
+			return false;
+		
+		setVisit(row,col);
+		
+		if (backTrack(row, col +1))
+		{
+			maze[row][col] = 2;
+			return true;
+		}
+		
+		if(backTrack(row+1, col))
+		{
+			maze[row][col] = 2;
+			return true;
+		}
+		
+		if(backTrack(row, col - 1))
+		{
+			maze[row][col] = 2;
+			return true;
+		}
+		
+		if(backTrack(row - 1, col))
+		{
+			maze[row][col] = 2;
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public void solve()
+	{
+		if (backTrack(0, 0))
+			System.out.println("Found the solution!");
+		else
+			System.out.println("There is no solution!");
+	}
+	
+	public int[][] getSolution()
+	{
+		return maze;
+	}
+	
+	private boolean isVisited(int row, int col)
+	{
+		return visit[row][col];
+	}
+	
+	//mark the current cell to be visited
+	private void setVisit(int row, int col)
+	{
+		visit[row][col] = true;
+	}
+}
