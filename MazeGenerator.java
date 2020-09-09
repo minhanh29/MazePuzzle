@@ -1,5 +1,6 @@
 import java.util.Random;
 
+// Author: Minh Anh Nguyen
 
 public class MazeGenerator {
 	private int size;
